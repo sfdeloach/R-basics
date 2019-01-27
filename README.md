@@ -4,14 +4,16 @@
 
 ### Section 1: R Basics, Functions, and Data Types
 
-#### VARIABLE ASSIGNMENT
+#### 1.2 BASICS
+
+##### VARIABLE ASSIGNMENT
 
 ```R
 a <- 5 # preferred
 b = 1  # may cause confusion with ==
 ```
 
-#### FUNCTIONS
+##### BASICS
 
 ```R
 print(a)    # explicit way to print variable a
@@ -28,7 +30,7 @@ pi          # constant
 Inf         # constant
 ```
 
-#### DATA TYPES
+#### 1.3 DATA TYPES
 
 ```R
 class(a)       # data.frame, Factor, num, char, etc
@@ -42,7 +44,7 @@ length(x$col)  # number of entries in vector
 identical(a,b) # compares vars a & b, returns logical
 ```
 
-#### NOTES
+##### NOTES
 
 - A ```Factor``` is analagous to an *enumeration*
 - A ```data.frame``` is analagous to a two-dimensional structure like a *SQL table*
@@ -54,9 +56,17 @@ identical(a,b) # compares vars a & b, returns logical
   - complex
   - logical (True/False)
 
+##### HOW TO CREATE A DATA FRAME
+
+```R
+temp <- c(35, 88, 42, 84, 81, 30)
+city <- c("Beijing", "Lagos", "Paris", "Rio de Janeiro", "San Juan", "Toronto")
+city_temps <- data.frame(name = city, temperature = temp)
+```
+
 ### Section 2: Vectors, Sorting
 
-#### VECTORS
+#### 2.1 VECTORS
 
 using concatenate ```c()```:
 
@@ -112,7 +122,7 @@ italy egypt
   380   818
 ```
 
-#### VECTOR COERCION
+##### VECTOR COERCION
 
 In general, coercion is an attempt by R
 to be flexible with data types.
@@ -154,4 +164,101 @@ Warning message:
 NAs introduced by coercion
 ```
 
-#### SORTING
+#### 2.2 SORTING
+
+Take the following:
+
+```R
+> x = c(31,4,15,92,65)
+> x
+[1] 31  4 15 92 65
+```
+
+The vector ```x``` can be sorted in acsending order by the ```sort()``` function:
+
+```R
+> sort(x)
+[1]  4 15 31 65 92
+```
+
+A vector's order can be reversed with the ```rev()``` function:
+
+```R
+> rev(sort(x))
+[1]  92 65 31 15 4
+```
+
+The function ```order()``` offers a similar sorting utility, however it sorts a vector by its index:
+
+```R
+# create a new vector based on index numbers
+> index = order(x)
+
+> index
+[1] 2 3 1 5 4
+
+# sorted x vector
+> x[index]
+[1]  4 15 31 65 92
+
+# proof that order creates a vector based on indices
+> x[c(2,3,1,5,4)]
+[1]  4 15 31 65 92
+> identical(x[c(2, 3, 1, 5, 4)], x[index])
+[1] TRUE
+```
+
+The following method demonstrates how to find the index that corresponds with a min and max number in one column of a data frame, and how to use the index to lookup the corresponding data in another column:
+
+```R
+> max(murders$total)
+[1] 1257
+> i_max <- which.max(murders$total)
+> i_max
+[1] 5
+> murders$state[i_max]
+[1] "California"
+```
+
+The function ```which.max()``` returns the index and is stored in the variable ```i_max```. The same example works for ```min()``` and ```which.min()```.
+
+Using the example from before, the function ```rank()``` provides another utility for sorting:
+
+```R
+> x
+[1] 31  4 15 92 65
+> rank(x)
+[1] 3 1 2 5 4
+```
+
+The first value in the ranked vector is 3 because 31 is the third smallest number and the second number 4 is the smallest number, etc.
+
+In summary:
+
+| original | ```sort()``` | ```order()``` | ```rank()``` |
+|:--------:|:------------:|:-------------:|:------------:|
+|    31    |       4      |       2       |       3      |
+|     4    |      15      |       3       |       1      |
+|    15    |      31      |       1       |       2      |
+|    92    |      65      |       5       |       5      |
+|    65    |      92      |       4       |       4      |
+
+#### 2.3 VECTOR ARITHMETIC
+
+### Section 3: Indexing, Data Wrangling, Plots
+
+#### 3.1 INDEXING
+
+#### 3.2 BASIC DATA WRANGLING
+
+#### 3.3 BASIC PLOTS
+
+### Section 4: Programming Basics
+
+#### 4.1 INTRODUCTION TO R PROGRAMMING
+
+#### 4.2 CONDITIONALS
+
+#### 4.3 FUNCTIONS
+
+#### 4.4 FOR LOOPS
