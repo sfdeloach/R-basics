@@ -46,15 +46,15 @@ identical(a,b) # compares vars a & b, returns logical
 
 ##### NOTES
 
-- A ```Factor``` is analagous to an *enumeration*
-- A ```data.frame``` is analagous to a two-dimensional structure like a *SQL table*
-- ```sprintf("%f", var)``` is a C-like way to print
-- Five basic atomic classes:
-  - character
-  - numeric (real numbers)
-  - integer
-  - complex
-  - logical (True/False)
+-   A `Factor` is analagous to an _enumeration_
+-   A `data.frame` is analagous to a two-dimensional structure like a _SQL table_
+-   `sprintf("%f", var)` is a C-like way to print
+-   Five basic atomic classes:
+    -   character
+    -   numeric (real numbers)
+    -   integer
+    -   complex
+    -   logical (True/False)
 
 ##### HOW TO CREATE A DATA FRAME
 
@@ -68,7 +68,7 @@ city_temps <- data.frame(name = city, temperature = temp)
 
 #### 2.1 VECTORS
 
-using concatenate ```c()```:
+using concatenate `c()`:
 
 ```R
 > codes <- c(380, 124, 818)
@@ -81,7 +81,7 @@ using concatenate ```c()```:
 > codes <- c(italy=380, canada=124, egypt=818)
 ```
 
-using sequence ```seq()```:
+using sequence `seq()`:
 
 ```R
 > seq(1, 10)    # [1] 1 2 3 4 5 6 7 8 9 10
@@ -174,21 +174,21 @@ Take the following:
 [1] 31  4 15 92 65
 ```
 
-The vector ```x``` can be sorted in acsending order by the ```sort()``` function:
+The vector `x` can be sorted in acsending order by the `sort()` function:
 
 ```R
 > sort(x)
 [1]  4 15 31 65 92
 ```
 
-A vector's order can be reversed with the ```rev()``` function:
+A vector's order can be reversed with the `rev()` function:
 
 ```R
 > rev(sort(x))
 [1]  92 65 31 15 4
 ```
 
-The function ```order()``` offers a similar sorting utility, however it sorts a vector by its index:
+The function `order()` offers a similar sorting utility, however it sorts a vector by its index:
 
 ```R
 # create a new vector based on index numbers
@@ -220,9 +220,9 @@ The following method demonstrates how to find the index that corresponds with a 
 [1] "California"
 ```
 
-The function ```which.max()``` returns the index and is stored in the variable ```i_max```. The same example works for ```min()``` and ```which.min()```.
+The function `which.max()` returns the index and is stored in the variable `i_max`. The same example works for `min()` and `which.min()`.
 
-Using the example from before, the function ```rank()``` provides another utility for sorting:
+Using the example from before, the function `rank()` provides another utility for sorting:
 
 ```R
 > x
@@ -235,15 +235,17 @@ The first value in the ranked vector is 3 because 31 is the third smallest numbe
 
 In summary:
 
-| original | ```sort()``` | ```order()``` | ```rank()``` |
-|:--------:|:------------:|:-------------:|:------------:|
-|    31    |       4      |       2       |       3      |
-|     4    |      15      |       3       |       1      |
-|    15    |      31      |       1       |       2      |
-|    92    |      65      |       5       |       5      |
-|    65    |      92      |       4       |       4      |
+| original | `sort()` | `order()` | `rank()` |
+| :------: | :------: | :-------: | :------: |
+|    31    |     4    |     2     |     3    |
+|     4    |    15    |     3     |     1    |
+|    15    |    31    |     1     |     2    |
+|    92    |    65    |     5     |     5    |
+|    65    |    92    |     4     |     4    |
 
 #### 2.3 VECTOR ARITHMETIC
+
+In R, arithmetic operations on vectors occur element-wise.  For example, let's create a vector of heights measured in inches and use vector arithmetic to convert the units to centimeters:
 
 ### Section 3: Indexing, Data Wrangling, Plots
 
