@@ -124,14 +124,11 @@ italy egypt
 
 ##### VECTOR COERCION
 
-In general, coercion is an attempt by R
-to be flexible with data types.
-When an entry does not match the expected,
-R tries to guess what we meant before throwing it in there.
-But this can also lead to confusion.
-Failing to understand coercion can drive programmers crazy
-when attempting to code in R, since it behaves quite differently from most
-other languages.
+In general, coercion is an attempt by R to be flexible with data types.
+When an entry does not match the expected, R tries to guess what we meant
+before throwing it in there. But this can also lead to confusion. Failing
+to understand coercion can drive programmers crazy when attempting to code
+in R, since it behaves quite differently from most other languages.
 
 Vectors must be all of the same type, however, the following script will not produce an error:
 
@@ -208,7 +205,9 @@ The function `order()` offers a similar sorting utility, however it sorts a vect
 [1] TRUE
 ```
 
-The following method demonstrates how to find the index that corresponds with a min and max number in one column of a data frame, and how to use the index to lookup the corresponding data in another column:
+The following method demonstrates how to find the index that corresponds
+with a min and max number in one column of a data frame, and how to use
+the index to lookup the corresponding data in another column:
 
 ```R
 > max(murders$total)
@@ -231,7 +230,8 @@ Using the example from before, the function `rank()` provides another utility fo
 [1] 3 1 2 5 4
 ```
 
-The first value in the ranked vector is 3 because 31 is the third smallest number and the second number 4 is the smallest number, etc.
+The first value in the ranked vector is 3 because 31 is the third smallest
+number and the second number 4 is the smallest number, etc.
 
 In summary:
 
@@ -245,7 +245,27 @@ In summary:
 
 #### 2.3 VECTOR ARITHMETIC
 
-In R, arithmetic operations on vectors occur element-wise.  For example, let's create a vector of heights measured in inches and use vector arithmetic to convert the units to centimeters:
+Arithmetic operations on vectors occur element-wise.  A single value
+can be applied to an entire vector using a number of operations. For
+example, let's create a vector of heights measured in inches and use
+vector arithmetic to convert the units to centimeters:
+
+```R
+> heights <- c(69,62,66,70,70,73,67,73,67,70)
+> heights * 2.54
+ [1] 175.26 157.48 167.64 177.80 177.80 185.42 170.18 185.42 170.18 177.80
+```
+
+Arithmetic operations on two vectors of similiar lengths can be applied
+in powerful combinations to provide useful results:
+
+```R
+> miles <- c(34,21,53,25,67)
+> hour <- c(0.55,0.32,0.62,0.21,0.89)
+> mph <- miles / hour
+> mph
+[1]  61.81818  65.62500  85.48387 119.04762  75.28090
+```
 
 ### Section 3: Indexing, Data Wrangling, Plots
 
