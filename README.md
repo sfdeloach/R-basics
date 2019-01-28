@@ -18,6 +18,7 @@ b = 1  # may cause confusion with ==
 ```R
 print(a)    # explicit way to print variable a
 ls()        # name of objects stored in workspace
+rm(...)     # remove objects from workspace
 help("log")
 ?log
 args(log)   # provides argument list
@@ -270,6 +271,63 @@ in powerful combinations to provide useful results:
 ### Section 3: Indexing, Data Wrangling, Plots
 
 #### 3.1 INDEXING
+
+Example demonstrating how to create a vector containing `makes` with
+greater than 550 hp:
+
+```R
+# a contrived data frame
+> imsa_cars
+      make class  hp
+1     Ford  GTLM 525
+2 Cadillac   DPi 605
+3    Mazda   DPi 605
+4  Ferrari  GTLM 525
+
+# <, <=, >, >=, ==, != are all acceptable relational operators
+> index <- imsa_cars$hp > 550
+
+# logicals can be used to index an existing vector
+> index
+[1] FALSE  TRUE  TRUE FALSE
+
+# final result
+> imsa_cars$make[index]
+[1] Cadillac Mazda
+```
+
+Count the number of entities that meet a specified condition:
+
+```R
+# logicals are coerced to numerics
+> sum(index)
+[1] 2
+```
+
+Extract the indices of vector elements satisfying more than one
+logical conditions (Fords with at least 500 hp):
+
+```R
+> imsa_cars
+      make class  hp
+1     Ford  GTLM 525
+2 Cadillac   DPi 605
+3    Mazda   DPi 605
+4  Ferrari  GTLM 525
+5     Ford   GTD 515
+
+# There is a difference in these logical operators
+#   &  element-wise, returns vector of same length
+#   && single, returns value of first element
+> ford_500_plus <- imsa_cars$make == "Ford" & imsa_cars$hp >= 500
+
+# used as an index variable
+> ford_500_plus
+[1]  TRUE FALSE FALSE FALSE  TRUE
+
+> imsa_cars$class[ford_500_plus]
+[1] GTLM GTD
+```
 
 #### 3.2 BASIC DATA WRANGLING
 
