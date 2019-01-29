@@ -16,27 +16,30 @@ b = 1  # may cause confusion with ==
 ##### BASICS
 
 ```R
-print(a)    # explicit way to print variable a
+print(x)    # explicit way to print a variable
 ls()        # name of objects stored in workspace
 rm(...)     # remove objects from workspace
-help("log")
-?log
-args(log)   # provides argument list
+help("fn")  # R documentation
+?fn         # alternative method to invoke help
+args(fn)    # provides argument list for function fn
 data()      # available data sets
 
+# small sample of base-included math functions
 sqrt(x)
 log(x)      # defaults to natural log base
 log(x, 10)
 pi          # constant
 Inf         # constant
+NA          # unable to infer type during coersion
+NaN         # Not a number, i.e. 0/0
 ```
 
 #### 1.3 DATA TYPES
 
 ```R
-class(a)       # data.frame, Factor, num, char, etc
-library(lib)
-data("data")
+class(x)       # class information on variable x
+library(lib)   # loads package `lib`
+data("data")   # loads dataset `data`
 str(x)         # structure of variable x
 head(x)        # first six lines in table x
 names(x)       # names of columns in table x
@@ -47,15 +50,15 @@ identical(a,b) # compares vars a & b, returns logical
 
 ##### NOTES
 
--   A `Factor` is analagous to an _enumeration_
--   A `data.frame` is analagous to a two-dimensional structure like a _SQL table_
--   `sprintf("%f", var)` is a C-like way to print
--   Five basic atomic classes:
-    -   character
-    -   numeric (real numbers)
-    -   integer
-    -   complex
-    -   logical (True/False)
+- A `Factor` is analagous to an _enumeration_
+- A `data.frame` is analagous to a two-dimensional structure like a _SQL table_
+- `sprintf("%f", var)` is a C-like way to print to the console
+- Five basic atomic classes:
+  - character
+  - numeric (real numbers)
+  - integer
+  - complex
+  - logical (True/False)
 
 ##### HOW TO CREATE A DATA FRAME
 
@@ -63,13 +66,21 @@ identical(a,b) # compares vars a & b, returns logical
 temp <- c(35, 88, 42, 84, 81, 30)
 city <- c("Beijing", "Lagos", "Paris", "Rio de Janeiro", "San Juan", "Toronto")
 city_temps <- data.frame(name = city, temperature = temp)
+> city_temps
+            name temperature
+1        Beijing          35
+2          Lagos          88
+3          Paris          42
+4 Rio de Janeiro          84
+5       San Juan          81
+6        Toronto          30
 ```
 
 ### Section 2: Vectors, Sorting
 
 #### 2.1 VECTORS
 
-using concatenate `c()`:
+using concatenate `c()`, combine arguments to form a vector:
 
 ```R
 > codes <- c(380, 124, 818)
@@ -125,13 +136,14 @@ italy egypt
 
 ##### VECTOR COERCION
 
-In general, coercion is an attempt by R to be flexible with data types.
-When an entry does not match the expected, R tries to guess what we meant
-before throwing it in there. But this can also lead to confusion. Failing
-to understand coercion can drive programmers crazy when attempting to code
-in R, since it behaves quite differently from most other languages.
+In general, coercion is an attempt by R to be flexible with data types. When an
+entry does not match the expected, R tries to guess what we meant before
+throwing it in there. But this can also lead to confusion. Failing to understand
+coercion can drive programmers crazy when attempting to code in R, since it
+behaves quite differently from most other languages.
 
-Vectors must be all of the same type, however, the following script will not produce an error:
+Vectors must be all of the same type, however, the following script will not
+produce an error:
 
 ```R
 > x <- c(1,"canada",3)
@@ -179,26 +191,27 @@ The vector `x` can be sorted in acsending order by the `sort()` function:
 [1]  4 15 31 65 92
 ```
 
-A vector's order can be reversed with the `rev()` function:
+A vector's order can be reversed by providing additional arguments to the
+`sort()` function or by using `rev()`:
 
 ```R
+> sort(x,decreasing=TRUE)
+[1] 92 65 31 15  4
 > rev(sort(x))
-[1]  92 65 31 15 4
+[1] 92 65 31 15  4
 ```
 
-The function `order()` offers a similar sorting utility, however it sorts a vector by its index:
+The function `order()` offers a similar sorting utility, however it sorts a
+vector by its index:
 
 ```R
 # create a new vector based on index numbers
 > index = order(x)
-
 > index
 [1] 2 3 1 5 4
-
 # sorted x vector
 > x[index]
 [1]  4 15 31 65 92
-
 # proof that order creates a vector based on indices
 > x[c(2,3,1,5,4)]
 [1]  4 15 31 65 92
@@ -220,9 +233,11 @@ the index to lookup the corresponding data in another column:
 [1] "California"
 ```
 
-The function `which.max()` returns the index and is stored in the variable `i_max`. The same example works for `min()` and `which.min()`.
+The function `which.max()` returns the index and is stored in the variable
+`i_max`. The same example works for `min()` and `which.min()`.
 
-Using the example from before, the function `rank()` provides another utility for sorting:
+Using the example from before, the function `rank()` will rank the values in a
+vector, lowest value is ranked #1:
 
 ```R
 > x
@@ -238,18 +253,18 @@ In summary:
 
 | original | `sort()` | `order()` | `rank()` |
 | :------: | :------: | :-------: | :------: |
-|    31    |     4    |     2     |     3    |
-|     4    |    15    |     3     |     1    |
-|    15    |    31    |     1     |     2    |
-|    92    |    65    |     5     |     5    |
-|    65    |    92    |     4     |     4    |
+|    31    |    4     |     2     |    3     |
+|    4     |    15    |     3     |    1     |
+|    15    |    31    |     1     |    2     |
+|    92    |    65    |     5     |    5     |
+|    65    |    92    |     4     |    4     |
 
 #### 2.3 VECTOR ARITHMETIC
 
-Arithmetic operations on vectors occur element-wise.  A single value
-can be applied to an entire vector using a number of operations. For
-example, let's create a vector of heights measured in inches and use
-vector arithmetic to convert the units to centimeters:
+Arithmetic operations on vectors occur element-wise. A single value can be
+applied to an entire vector using a number of operations. For example, let's
+create a vector of heights measured in inches and use vector arithmetic to
+convert the units to centimeters:
 
 ```R
 > heights <- c(69,62,66,70,70,73,67,73,67,70)
@@ -257,8 +272,8 @@ vector arithmetic to convert the units to centimeters:
  [1] 175.26 157.48 167.64 177.80 177.80 185.42 170.18 185.42 170.18 177.80
 ```
 
-Arithmetic operations on two vectors of similiar lengths can be applied
-in powerful combinations to provide useful results:
+Arithmetic operations on two vectors of similiar lengths will be applied on
+values sharing the same index:
 
 ```R
 > miles <- c(34,21,53,25,67)
@@ -272,8 +287,8 @@ in powerful combinations to provide useful results:
 
 #### 3.1 INDEXING
 
-Example demonstrating how to create a vector containing `makes` with
-greater than 550 hp:
+Example demonstrating how to create a vector containing `makes` with greater
+than 550 hp:
 
 ```R
 # a contrived data frame
@@ -299,15 +314,16 @@ greater than 550 hp:
 Count the number of entities that meet a specified condition:
 
 ```R
-# logicals are coerced to numerics
+# logicals are coerced to numerics, TRUE == 1, FALSE == 0
 > sum(index)
 [1] 2
 ```
 
-Extract the indices of vector elements satisfying more than one
-logical conditions (Fords with at least 500 hp):
+Extract the indices of vector elements satisfying more than one logical
+condition (i.e. Fords with at least 500 hp):
 
 ```R
+# data frame from above slightly modified
 > imsa_cars
       make class  hp
 1     Ford  GTLM 525
@@ -316,7 +332,7 @@ logical conditions (Fords with at least 500 hp):
 4  Ferrari  GTLM 525
 5     Ford   GTD 515
 
-# There is a difference in these logical operators
+# There is a difference in these logical operators:
 #   &  element-wise, returns vector of same length
 #   && single, returns value of first element
 > ford_500_plus <- imsa_cars$make == "Ford" & imsa_cars$hp >= 500
@@ -327,6 +343,35 @@ logical conditions (Fords with at least 500 hp):
 
 > imsa_cars$class[ford_500_plus]
 [1] GTLM GTD
+```
+
+##### INDEXING FUNCTIONS
+
+`which()` gives the ‘TRUE’ indices of a logical object, allowing for array
+indices.
+
+```R
+> x <- c(TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE)
+> which(x)
+[1] 1 4 5 8
+```
+
+`match()` returns a vector of the positions of (first) matches of its first
+argument in its second.
+
+```R
+> states <- c("FL","GA","AL","SC","NC","TN","MS","LA","TX","KY")
+> match(c("NC","SC","TN"),states)
+[1] 5 4 6
+```
+
+`%in%` is a more intuitive interface as a binary operator, which returns a
+logical vector indicating if there is a match or not for its left operand.
+
+```R
+# using the same vector 'states' as defined earlier
+> c("NC","MA","SC","CA","TN") %in% states
+[1]  TRUE FALSE  TRUE FALSE  TRUE
 ```
 
 #### 3.2 BASIC DATA WRANGLING
