@@ -376,6 +376,101 @@ logical vector indicating if there is a match or not for its left operand.
 
 #### 3.2 BASIC DATA WRANGLING
 
+##### BASIC DATA WRANGLING
+
+Advanced data analysis will require the manipulation of data tables. The `dplyr`
+package is introduced to provide intuitive functionality
+
+```R
+# one-time installation of library
+> install.packages("dplyr")
+
+# once installed, load the package
+> library(dplyr)
+```
+
+Load a CSV file for analysis:
+
+```R
+> motorskills <- read.csv("motorskills.csv", header= TRUE)
+> motorskills
+         date   name         agency time1 cones1 time2 cones2
+1  01-31-2019   Bill      Altamonte   101      1    99      0
+2  01-31-2019  Terry    Casselberry   104      1   101      0
+3  01-31-2019    Tim Winter Springs   107      1   106      0
+4  01-31-2019  David      Lake Mary   103      1   103      1
+5  01-31-2019    Dan        Sanford   102      1   101      2
+6  01-30-2019 Marcos       Longwood   109      1   104      0
+7  01-30-2019  Kevin         Oviedo    95      3    99      1
+8  01-30-2019  Allen       Maitland   107      0   104      0
+9  01-30-2019   Matt    Winter Park   100      3   103      0
+10 01-30-2019    Dom         Apopka    98      3   104      1
+```
+
+`mutate()` - adds new variables and preserves existing columns
+
+```R
+# add new column for the combined time
+> motorskills <- mutate(motorskills, combined_time = time1 + time2)
+> motorskills
+         date   name         agency time1 cones1 time2 cones2 combined_time
+1  01-31-2019   Bill      Altamonte   101      1    99      0           200
+2  01-31-2019  Terry    Casselberry   104      1   101      0           205
+3  01-31-2019    Tim Winter Springs   107      1   106      0           213
+4  01-31-2019  David      Lake Mary   103      1   103      1           206
+5  01-31-2019    Dan        Sanford   102      1   101      2           203
+6  01-30-2019 Marcos       Longwood   109      1   104      0           213
+7  01-30-2019  Kevin         Oviedo    95      3    99      1           194
+8  01-30-2019  Allen       Maitland   107      0   104      0           211
+9  01-30-2019   Matt    Winter Park   100      3   103      0           203
+10 01-30-2019    Dom         Apopka    98      3   104      1           202
+```
+
+`select()` - keeps only the variables you mention
+
+```R
+> motorskills <- select(motorskills, name, agency, combined_time)
+> motorskills
+     name         agency combined_time
+1    Bill      Altamonte           200
+2   Terry    Casselberry           205
+3     Tim Winter Springs           213
+4   David      Lake Mary           206
+5     Dan        Sanford           203
+6  Marcos       Longwood           213
+7   Kevin         Oviedo           194
+8   Allen       Maitland           211
+9    Matt    Winter Park           203
+10    Dom         Apopka           202
+```
+
+`filter()` - find rows/cases where conditions are true
+
+```R
+> motorskills <- filter(motorskills, combined_time <= 200)
+> motorskills
+   name    agency combined_time
+1  Bill Altamonte           200
+2 Kevin    Oviedo           194
+```
+
+Combine functions with the pipe operator `%>%`
+
+```R
+# start the example with a fresh read from the file
+> motorskills <- read.csv("motorskills.csv", header=TRUE)
+
+# note that this next line is a multiline command
+> motorskills %>% mutate(ave_time = (time1 + time2) / 2) %>%
++ select(name, agency, ave_time) %>% filter(ave_time <= 101.0)
+   name    agency ave_time
+1  Bill Altamonte      100
+2 Kevin    Oviedo       97
+3   Dom    Apopka      101
+```
+
+##### CREATING DATA FRAMES
+
 #### 3.3 BASIC PLOTS
 
 ### Section 4: Programming Basics
