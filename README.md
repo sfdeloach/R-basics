@@ -60,7 +60,7 @@ identical(a,b) # compares vars a & b, returns logical
   - complex
   - logical (True/False)
 
-##### HOW TO CREATE A DATA FRAME
+##### HOW TO CREATE A DATA FRAME (more in Section 3.2)
 
 ```R
 temp <- c(35, 88, 42, 84, 81, 30)
@@ -392,7 +392,8 @@ package is introduced to provide intuitive functionality
 Load a CSV file for analysis:
 
 ```R
-> motorskills <- read.csv("motorskills.csv", header= TRUE)
+# as.is=TRUE will read strings as chars, otherwise strings are read as factors
+> motorskills <- read.csv("motorskills.csv",header=TRUE,as.is=TRUE)
 > motorskills
          date   name         agency time1 cones1 time2 cones2
 1  01-31-2019   Bill      Altamonte   101      1    99      0
@@ -447,6 +448,7 @@ Load a CSV file for analysis:
 `filter()` - find rows/cases where conditions are true
 
 ```R
+# note that the operator != may be used to remove data from table
 > motorskills <- filter(motorskills, combined_time <= 200)
 > motorskills
    name    agency combined_time
@@ -470,6 +472,28 @@ Combine functions with the pipe operator `%>%`
 ```
 
 ##### CREATING DATA FRAMES
+
+Observe how R defaults reading a column of strings as factors, and not chars:
+
+```R
+> grades <- data.frame(names=c("Ann","Bill","Carol","Dan"),
++ exam_1 = c(94,92,93,90),
++ exam_2 = c(88,84,82,89))
+> class(grades$names)
+[1] "factor"
+```
+
+To override this default behavior, use the additional argument
+`stringsAsFactors`:
+
+```R
+> grades <- data.frame(names=c("Ann","Bill","Carol","Dan"),
++ exam_1 = c(94,92,93,90),
++ exam_2 = c(88,84,82,89),
++ stringsAsFactors=FALSE)
+> class(grades$names)
+[1] "character"
+```
 
 #### 3.3 BASIC PLOTS
 
