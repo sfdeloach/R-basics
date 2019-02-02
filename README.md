@@ -497,6 +497,36 @@ To override this default behavior, use the additional argument
 
 #### 3.3 BASIC PLOTS
 
+`plot(x-axis, y-axis)` - generic X-Y plotting
+
+```R
+> x <- -20:20
+> y <- x * x
+> data <- data.frame(x = x, y = y)
+> plot(data$x,data$y)
+# with additional arguments
+> plot(data$x,data$y,type="l",main="y = x^2",xlab="x",ylab="y")
+```
+
+`hist(vals)` - simple histogram
+
+```R
+> norm <- rnorm(10000)
+> hist(norm)
+# another example overriding the bin size
+hist(rnorm(10000),breaks=seq(-4,4,0.10))
+```
+
+`boxplot(vals~subsection, dataframe)` - A box plot is a graphical rendition of
+statistical data based on the minimum, first quartile, median, third quartile,
+and maximum. The term "box plot" comes from the fact that the graph looks like a
+rectangle with lines extending from the top and bottom.
+
+```R
+> data <- data.frame(val=rnorm(40),area=c("N","S","E","W"))
+> boxplot(val~area,data=data)
+```
+
 ### Section 4: Programming Basics
 
 #### 4.1 INTRODUCTION TO R PROGRAMMING
