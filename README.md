@@ -527,7 +527,7 @@ rectangle with lines extending from the top and bottom.
 > boxplot(val~area,data=data)
 ```
 
-![boxplot](https://raw.githubusercontent.com/sfdeloach/R-basics/images/boxplot.png)
+![boxplot](https://raw.githubusercontent.com/sfdeloach/R-basics/master/images/boxplot.png)
 
 ### Section 4: Programming Basics
 
