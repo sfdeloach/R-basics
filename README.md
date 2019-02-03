@@ -48,8 +48,10 @@ length(x$col)  # number of entries in vector
 identical(a,b) # compares vars a & b, returns logical
 ```
 
-##### NOTES
+##### NOTES FOR THE JAVA(SCRIPT) PROGRAMMER
 
+- `Vectors` are like an _array_ of values of the same type
+- `Lists` are "generic vectors" will values not of the same type
 - A `Factor` is analagous to an _enumeration_
 - A `data.frame` is analagous to a two-dimensional structure like a _SQL table_
 - `sprintf("%f", var)` is a C-like way to print to the console
@@ -109,17 +111,18 @@ using sequence `seq()`:
 subsetting:
 
 ```R
-> codes[2] # not zero based!
+# CAUTION: vectors are not zero based!
+> codes[2]
 canada
    124
 
-# multi-entry vector, return 1 and 3
+# multi-entry vector by creating a list
 > codes[c(1,3)]
 italy egypt
   380   818
 
-# multi-entry vector, return 1 thru 2
-> codes[c(1:2)]
+# multi-entry vector by sequence
+> codes[1:2]
 italy canada
   380    124
 
@@ -533,7 +536,61 @@ rectangle with lines extending from the top and bottom.
 
 #### 4.1 INTRODUCTION TO R PROGRAMMING
 
+Advanced R programming will not be covered in this course.
+
 #### 4.2 CONDITIONALS
+
+Conditionals explained by example:
+
+```R
+> a <- c(0,-1,2,-3,4,-5)
+
+# typical if-else syntax
+> if (a[1] == 0) { print("number is zero") } else { a[1] * 2 }
+[1] "number is zero"
+> if (a[2] == 0) { print("number is zero") } else { a[2] * 2 }
+[1] -2
+
+# if-else may not work as expected for vectors
+> if (a > 0) { 1/a }
++ else { NA }
+[1] NA
+Warning message:
+In if (a > 0) { 1/a }:
+  the condition has length > 1 and only the first element will be used
+
+# ifelse() is designed to properly handle vectors
+> result <- ifelse(a > 0, 1/a, NA)
+> result
+[1]   NA   NA 0.50   NA 0.25   NA
+
+# handy use of ifelse to remove NAs
+> no_nas <- ifelse(is.na(result), 0, result)
+> no_nas
+[1] 0.00 0.00 0.50 0.00 0.25 0.00
+```
+
+Two useful functions in dealing with logical vectors, `any()` and `all()`:
+
+```R
+> vals <- c(TRUE, TRUE, FALSE)
+
+# at least one value true?
+> any(vals)
+[1] TRUE
+
+# all values true?
+> all(vals)
+[1] FALSE
+
+> vals <- c(FALSE, FALSE, FALSE)
+> any(vals)
+[1] FALSE
+
+> vals <- c(TRUE,TRUE,TRUE)
+> all(vals)
+[1] TRUE
+```
 
 #### 4.3 FUNCTIONS
 
