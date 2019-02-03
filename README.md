@@ -594,4 +594,89 @@ Two useful functions in dealing with logical vectors, `any()` and `all()`:
 
 #### 4.3 FUNCTIONS
 
+Sample function definition for an average:
+
+```R
+> avg <- function(x) {
++   s <- sum(x)
++   n <- length(x)
++   s/n
++ }
+> x
+[1] 13 18 13 14 13 16 14 21 13
+> avg(x)
+[1] 15
+```
+
+Note that the final line in the function definition is returned.
+
+##### Lexical Scope
+
+Variables defined inside a function are not available outside of the function
+block, and variables defined outside of a function are accessible inside the
+function, unless overriden by defining an argument of the same name or
+re-defining inside the function.
+
+```R
+# 's' was defined to be the sum of vector 'x' within the function 'avg'
+> s
+Error: object 's' not found
+```
+
+##### Default Arguments
+
+Functions may be defined with default arguments if not specified:
+
+```R
+> my_mean <- function(x, arithmetic = TRUE) {
++   n <- length(x)
++   ifelse(arithmetic, sum(x)/n, prod(x)^(1/n))
++ }
+> my_mean(x)
+[1] 15
+> my_mean(x, arithmetic=FALSE)
+[1] 14.78973
+```
+
 #### 4.4 FOR LOOPS
+
+##### For Loops
+
+R allows the use of for loops, however, they are rarely used. Instead the
+functions `apply()`, `sapply()`, `tapply()`, `mapply()` are used to complete the
+same task as a for loop with a bit more usefullness.  See the next section
+'Other Functions' for more information.
+
+```R
+# 'x' defined in the global scope, accessible inside the for loop
+> x <- 0
+> for(i in 1:10) {
++   x <- x + i
++ }
+
+# result
+> x
+[1] 55
+```
+
+##### Other Functions
+
+`apply()`
+
+`sapply()`
+
+`tapply()`
+
+`mapply()`
+
+`split()`
+
+`cut()`
+
+`quantile()`
+
+`reduce()`
+
+`identical()`
+
+`unique()`
