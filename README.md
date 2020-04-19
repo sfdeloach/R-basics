@@ -51,7 +51,7 @@ identical(a,b) # compares vars a & b, returns logical
 ##### NOTES FOR THE JAVA(SCRIPT) PROGRAMMER
 
 - `Vectors` are like an _array_ of values of the same type
-- `Lists` are "generic vectors" will values not of the same type
+- `Lists` are "generic vectors" with values of different types
 - A `Factor` is analagous to an _enumeration_
 - A `data.frame` is analagous to a two-dimensional structure like a _SQL table_
 - `sprintf("%f", var)` is a C-like way to print to the console
